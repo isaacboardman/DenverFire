@@ -1,5 +1,5 @@
-name: build-main
-run-name: build-main
+name: run-main
+run-name: run-main
 on:
   push:
     branches:
@@ -11,22 +11,24 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/osgeo/gdal
     permissions:
       contents: write
-    name: download and save data
+    name: main
     steps:
+      - run: apt-get update
+
+      - run: apt-get install -y git
+
       - uses: actions/checkout@v3
 
-      - uses: actions/setup-python@v4
+      - run: sh ./run.sh
 
-      - run: pip install requests
+      - run: ls
 
-      - run: pip install h3 --pre # get latest version of h3
-
-      - run: python3 run.py
-
+      # prevents fatal: detected dubious ownership in repository at '/__w/overpass/overpass'
       - run: git config --global --add safe.directory /__w/DenverFire/DenverFire
-
 
       # Commit all changed files back to the repository
       - uses: stefanzweifel/git-auto-commit-action@v5
