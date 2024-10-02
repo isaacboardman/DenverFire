@@ -1,7 +1,32 @@
-- run: ls
+name: build-main
+run-name: build-main
+on:
+  push:
+    branches:
+      - main
+  schedule:
+    # every day at midnight
+    - cron: 0 0 * * *
 
-      # prevents fatal: detected dubious ownership in repository at '/__w/github-automation/github-automation'
-      - run: git config --global --add safe.directory /__w/DenverFire/github-automation
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    name: download and save data
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-python@v4
+
+      - run: pip install requests
+
+      - run: pip install h3 --pre # get latest version of h3
+
+      - run: python3 run.py
+
+      - run: git config --global --add safe.directory /__w/Dataworkshop/Dataworkshop
+
 
       # Commit all changed files back to the repository
       - uses: stefanzweifel/git-auto-commit-action@v5
