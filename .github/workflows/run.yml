@@ -1,0 +1,8 @@
+run: ls
+
+# prevents fatal: detected dubious ownership in repository at '/__w/ogr2ogr/ogr2ogr'
+run: git config --global --add safe.directory /__w/ogr2ogr/ogr2ogr
+run: git config --global --add safe.directory /__w/DenverFire
+
+      # Commit all changed files back to the repository
+uses: stefanzweifel/git-auto-commit-action@v5
