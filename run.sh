@@ -1,1 +1,1 @@
-curl "https://cmr.earthdata.nasa.gov/search/collections.csv?data_center=ASF&page_size=2000" --output data.csv
+curl "https://overpass-turbo.eu/s/1S5u" --output data.csv
